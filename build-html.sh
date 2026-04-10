@@ -8,7 +8,15 @@ OUTPUT_FILE="/root/.openclaw/workspace-bunny/war-iran/index.html"
 UPDATES_HTML=""
 
 for file in $(ls -t "$UPDATE_DIR"/*.md 2>/dev/null | head -5); do
-    TIMESTAMP=$(TZ='Asia/Bangkok' date +"%-d เม.ย. %Y เวลา %H:%M น.")
+    # Extract date from filename (e.g., 20260410-1200.md)
+    FILENAME=$(basename "$file" .md)
+    # Parse: YYYYMMDD-HHMM -> Thai time
+    YEAR=$(echo $FILENAME | cut -c1-4)
+    MONTH=$(echo $FILENAME | cut -c5-6)
+    DAY=$(echo $FILENAME | cut -c7-8)
+    HOUR=$(echo $FILENAME | cut -c10-11)
+    MIN=$(echo $FILENAME | cut -c12-13)
+    TIMESTAMP=$(TZ='Asia/Bangkok' date -d "$YEAR-$MONTH-$DAY $HOUR:$MIN" +"%-d เม.ย. %Y เวลา %H:%M น." 2>/dev/null || echo "$FILENAME")
     
     # Read file content
     CONTENT=$(cat "$file")
