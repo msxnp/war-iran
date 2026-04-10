@@ -42,7 +42,7 @@ done
 WAR_START="2026-02-28"
 TODAY=$(date +%Y-%m-%d)
 DAY_COUNT=$(( ($(date -d "$TODAY" +%s) - $(date -d "$WAR_START" +%s)) / 86400 + 1 ))
-CURRENT_DATE=$(date +"%-d เม.ย. %Y")
+CURRENT_DATE=$(TZ='Asia/Bangkok' date +"%-d เม.ย. %Y %H:%M น.")
 
 # Get commit count
 COMMIT_COUNT=$(git rev-list --count HEAD 2>/dev/null || echo "0")
