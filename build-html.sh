@@ -104,7 +104,6 @@ cat > "$OUTPUT_FILE" << EOF
         <div class="status-box">
             <div class="status-item danger"><div class="label">วันที่</div><div class="value">$CURRENT_DATE</div></div>
             <div class="status-item danger"><div class="label">Day of Conflict</div><div class="value">$DAY_COUNT</div></div>
-            <div class="status-item warning"><div class="label">Trump Deadline</div><div class="value">07:00 น.</div></div>
             <div class="status-item safe"><div class="label">Hormuz Status</div><div class="value">✓ เปิด</div></div>
             <div class="status-item"><div class="label">Updates</div><div class="value">$COMMIT_COUNT</div></div>
         </div>
