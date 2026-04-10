@@ -38,13 +38,22 @@ for file in $(ls -t "$UPDATE_DIR"/*.md 2>/dev/null | head -5); do
     </div>"
 done
 
+# Calculate days since war started (Feb 28, 2026)
+WAR_START="2026-02-28"
+TODAY=$(date +%Y-%m-%d)
+DAY_COUNT=$(( ($(date -d "$TODAY" +%s) - $(date -d "$WAR_START" +%s)) / 86400 + 1 ))
+CURRENT_DATE=$(date +"%-d เม.ย. %Y")
+
+# Get commit count
+COMMIT_COUNT=$(git rev-list --count HEAD 2>/dev/null || echo "0")
+
 # If no updates, show message
 if [ -z "$UPDATES_HTML" ]; then
     UPDATES_HTML="<div class='no-update'>ยังไม่มีข้อมูลอัพเดท</div>"
 fi
 
 # Generate full HTML
-cat > "$OUTPUT_FILE" << 'EOF'
+cat > "$OUTPUT_FILE" << EOF
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -93,10 +102,11 @@ cat > "$OUTPUT_FILE" << 'EOF'
         </header>
         
         <div class="status-box">
-            <div class="status-item danger"><div class="label">วันที่</div><div class="value">7 เม.ย. 2026</div></div>
-            <div class="status-item danger"><div class="label">Day of Conflict</div><div class="value">38</div></div>
+            <div class="status-item danger"><div class="label">วันที่</div><div class="value">$CURRENT_DATE</div></div>
+            <div class="status-item danger"><div class="label">Day of Conflict</div><div class="value">$DAY_COUNT</div></div>
             <div class="status-item warning"><div class="label">Trump Deadline</div><div class="value">07:00 น.</div></div>
             <div class="status-item safe"><div class="label">Hormuz Status</div><div class="value">✓ เปิด</div></div>
+            <div class="status-item"><div class="label">Updates</div><div class="value">$COMMIT_COUNT</div></div>
         </div>
         
         <div style="text-align: center; margin: 30px 0;">
