@@ -1,8 +1,8 @@
 #!/bin/bash
 # Script to generate HTML from markdown updates
 
-UPDATE_DIR="/root/.openclaw/workspace/war-iran/updates"
-OUTPUT_FILE="/root/.openclaw/workspace/war-iran/index.html"
+UPDATE_DIR="/root/.openclaw/workspace-bunny/war-iran/updates"
+OUTPUT_FILE="/root/.openclaw/workspace-bunny/war-iran/index.html"
 
 # Read all update files and create HTML
 UPDATES_HTML=""
