@@ -8,8 +8,7 @@ OUTPUT_FILE="/root/.openclaw/workspace-bunny/war-iran/index.html"
 UPDATES_HTML=""
 
 for file in $(ls -t "$UPDATE_DIR"/*.md 2>/dev/null | head -5); do
-    TIMESTAMP=$(basename "$file" .md)
-    TIME_DISPLAY=$(echo $TIMESTAMP | sed 's/2026/2026<br>/' | sed 's/-/:/')
+    TIMESTAMP=$(TZ='Asia/Bangkok' date +"%-d เม.ย. %Y เวลา %H:%M น.")
     
     # Read file content
     CONTENT=$(cat "$file")
