@@ -16,7 +16,9 @@ for file in $(ls -t "$UPDATE_DIR"/*.md 2>/dev/null | head -5); do
     DAY=$(echo $FILENAME | cut -c7-8)
     HOUR=$(echo $FILENAME | cut -c10-11)
     MIN=$(echo $FILENAME | cut -c12-13)
-    TIMESTAMP=$(TZ='Asia/Bangkok' date -d "$YEAR-$MONTH-$DAY $HOUR:$MIN" +"%-d เม.ย. %Y เวลา %H:%M น." 2>/dev/null || echo "$FILENAME")
+    # Parse UTC time from filename and convert to ICT (UTC+7)
+    # Use date command for proper timezone conversion
+    TIMESTAMP=$(TZ='Asia/Bangkok' date -d "${YEAR}-${MONTH}-${DAY} ${HOUR}:${MIN}:00 UTC" +"%-d เม.ย. %Y เวลา %H:%M น." 2>/dev/null || echo "$FILENAME")
     
     # Read file content
     CONTENT=$(cat "$file")
