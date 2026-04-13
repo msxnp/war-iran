@@ -53,6 +53,21 @@ TODAY=$(date +%Y-%m-%d)
 DAY_COUNT=$(( ($(date -d "$TODAY" +%s) - $(date -d "$WAR_START" +%s)) / 86400 + 1 ))
 CURRENT_DATE=$(TZ='Asia/Bangkok' date +"%-d เม.ย. %Y %H:%M น.")
 
+# Read Hormuz status from file (default to closed if file doesn't exist)
+HORMUZ_STATUS_FILE="/root/.openclaw/workspace-bunny/war-iran/hormuz-status.txt"
+if [ -f "$HORMUZ_STATUS_FILE" ]; then
+    HORMUZ_STATUS=$(cat "$HORMUZ_STATUS_FILE")
+else
+    HORMUZ_STATUS="✗ ปิด (Blockade)"
+fi
+
+# Determine CSS class based on status
+if [[ "$HORMUZ_STATUS" == *"เปิด"* ]]; then
+    HORMUZ_CLASS="safe"
+else
+    HORMUZ_CLASS="danger"
+fi
+
 # Get commit count
 COMMIT_COUNT=$(git rev-list --count HEAD 2>/dev/null || echo "0")
 
@@ -113,7 +128,7 @@ cat > "$OUTPUT_FILE" << EOF
         <div class="status-box">
             <div class="status-item danger"><div class="label">วันที่</div><div class="value">$CURRENT_DATE</div></div>
             <div class="status-item danger"><div class="label">Day of Conflict</div><div class="value">$DAY_COUNT</div></div>
-            <div class="status-item safe"><div class="label">Hormuz Status</div><div class="value">✓ เปิด</div></div>
+            <div class="status-item $HORMUZ_CLASS"><div class="label">Hormuz Status</div><div class="value">$HORMUZ_STATUS</div></div>
             <div class="status-item"><div class="label">Updates</div><div class="value">$COMMIT_COUNT</div></div>
         </div>
         
